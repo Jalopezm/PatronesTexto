@@ -26,4 +26,10 @@ public class Container<T> {
         this.nobj++;
     }
 
+    public T get(int pos) {
+        if (pos < this.nobj) {
+            return (T) objectArray[pos];
+        }
+        return null;
+    }
 }

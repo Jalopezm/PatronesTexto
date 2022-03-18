@@ -1,51 +1,41 @@
 public class Find {
     private String texto;
-
     public Find(String texto) {
         this.texto = texto;
     }
 
     public boolean match(String stringPat) {
         Pattern pattern = new Pattern(stringPat);
-        int isMatching = 0;
-        String stringAux = "";
+        if (stringPat.length() == 0) {
+            return false;
+        }
+        int contador = 0;
         for (int i = 0; i < this.texto.length(); i++) {
-            for (int j = 0; j < stringPat.length(); j++) {
-                if (i > this.texto.length() - 1) {
-                    return false;
+             char c = this.texto.charAt(i);
+                if (matchText(pattern.components.get(contador),c,i)){
+                    contador++;
+                }else{
+                    i-=contador;
+                    contador=0;
                 }
-                if (stringPat.charAt(j) == '@') {
-                    isMatching += 1;
-                    j++;
-                }
-                if (stringPat.charAt(j) == '?') {
-                    stringAux = stringPat;
-                    stringPat = stringPat.replace(stringPat.charAt(j), this.texto.charAt(i));
-                    stringPat = stringPat.substring(0, j + 1) + stringAux.substring(j + 1, stringPat.length());
-                }
-                while (stringPat.charAt(j) == this.texto.charAt(i)) {
-                    isMatching += 1;
-                    break;
-                }
-                if (stringPat.charAt(j) != this.texto.charAt(i)) {
-                    isMatching = 0;
-                    if (stringAux != ""){
-                        if (stringAux.charAt(j) == '?') {
-                            stringPat = stringAux;
-                            i--;
-                            j--;
-                        }
-                    }
-                    break;
-                }
-                if (isMatching == stringPat.length()) {
+                if (contador == stringPat.length()){
                     return true;
                 }
-                i++;
-            }
         }
         return false;
     }
+
+    private boolean matchText(Component component, char c, int i) {
+            switch (component.tipo) {
+                case nChar -> {return component.character == c;}
+                case qMark -> {return true;}
+//            case boL -> {if (i == 0 && component.tipo == Component.TComponent.boL){}}
+//            case eoL -> {if (i == this.texto.length()-1 && component.tipo == Component.TComponent.eoL){}}
+//            case closure -> {}
+            }
+        return false;
+    }
+
 
     public String capture(String stringPat) {
         return "";
