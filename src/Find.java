@@ -18,6 +18,9 @@ public class Find {
                     i-=contador;
                     contador=0;
                 }
+                if (stringPat.contains("@") && contador == stringPat.length()-1){
+                    contador++;
+                }
                 if (contador == stringPat.length()){
                     return true;
                 }
