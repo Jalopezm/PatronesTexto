@@ -21,13 +21,9 @@ public class Pattern {
             } else if (c == '%' && i == 0) {
                 Component component = new Component();
                 component.tipo = Component.TComponent.boL;
-                component.character = c;
-                components.addElement(component);
             } else if (c == '$' && i == strPatr.length() - 1) {
                 Component component = new Component();
                 component.tipo = Component.TComponent.eoL;
-                component.character = c;
-                components.addElement(component);
             } else if (c == '*' || c == '+') {
                 Component component = new Component();
                 component.tipo = Component.TComponent.closure;

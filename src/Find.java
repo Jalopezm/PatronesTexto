@@ -13,9 +13,15 @@ public class Find {
         int contador = 0;
         for (int i = 0; i < this.texto.length(); i++) {
             char c = this.texto.charAt(i);
-            if (matchText(pattern.components.get(contador), c, i, stringPat.length())) {
+            if (matchText(pattern.components.get(contador), c)) {
                 contador++;
-            } else {
+            }else{
+                if (stringPat.charAt(0) == '%' && !matchText(pattern.components.get(contador), c)){
+                    return false;
+                }
+                if (stringPat.charAt(stringPat.length()-1) == '$' && contador == pattern.components.size()-1){
+                    return true;
+                }
                 i -= contador;
                 contador = 0;
             }
@@ -26,13 +32,16 @@ public class Find {
         return false;
     }
 
-    private boolean matchText(Component component, char c, int i, int size) {
+    private boolean matchText(Component component, char c) {
         switch (component.tipo) {
             case nChar -> {
                 return component.character == c;
             }
-            case qMark, boL, eoL -> {
+            case qMark -> {
                 return true;
+            }
+            case boL, eoL -> {
+               return c == component.character;
             }
             //            case closure -> {}
         }
