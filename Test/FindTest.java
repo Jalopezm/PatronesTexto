@@ -45,7 +45,7 @@ public class FindTest {
 
         f = new Find("stars*d+");
         assertTrue(f.match("s@*"));
-//        assertTrue(f.match("@*d@+"));
+        assertTrue(f.match("@*d@+"));
         assertTrue(f.match("ars@*"));
 
         f = new Find("%hello$");

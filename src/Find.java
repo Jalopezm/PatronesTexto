@@ -1,5 +1,6 @@
 public class Find {
     private String texto;
+
     public Find(String texto) {
         this.texto = texto;
     }
@@ -11,31 +12,30 @@ public class Find {
         }
         int contador = 0;
         for (int i = 0; i < this.texto.length(); i++) {
-             char c = this.texto.charAt(i);
-                if (matchText(pattern.components.get(contador),c,i)){
-                    contador++;
-                }else{
-                    i-=contador;
-                    contador=0;
-                }
-                if (stringPat.contains("@") && contador == stringPat.length()-1){
-                    contador++;
-                }
-                if (contador == stringPat.length()){
-                    return true;
-                }
+            char c = this.texto.charAt(i);
+            if (matchText(pattern.components.get(contador), c, i, stringPat.length())) {
+                contador++;
+            } else {
+                i -= contador;
+                contador = 0;
+            }
+            if (contador == pattern.components.size()) {
+                return true;
+            }
         }
         return false;
     }
 
-    private boolean matchText(Component component, char c, int i) {
-            switch (component.tipo) {
-                case nChar -> {return component.character == c;}
-                case qMark -> {return true;}
-//            case boL -> {if (i == 0 && component.tipo == Component.TComponent.boL){}}
-//            case eoL -> {if (i == this.texto.length()-1 && component.tipo == Component.TComponent.eoL){}}
-//            case closure -> {}
+    private boolean matchText(Component component, char c, int i, int size) {
+        switch (component.tipo) {
+            case nChar -> {
+                return component.character == c;
             }
+            case qMark, boL, eoL -> {
+                return true;
+            }
+            //            case closure -> {}
+        }
         return false;
     }
 
