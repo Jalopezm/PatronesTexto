@@ -26,6 +26,9 @@ public class Find {
                 contador = 0;
             }
             if (contador == pattern.components.size()) {
+                if(stringPat.charAt(stringPat.length()-1) == '$'&& i != this.texto.length()-1){
+                   return false;
+                }
                 return true;
             }
         }

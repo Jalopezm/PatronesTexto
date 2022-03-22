@@ -3,6 +3,8 @@ public class Pattern {
 
     Pattern(String strPatr) {
         boolean arrobaFound = false;
+        boolean rangeFound = false;
+
         for (int i = 0; i < strPatr.length(); i++) {
             char c = strPatr.charAt(i);
             if (arrobaFound) {
@@ -12,6 +14,17 @@ public class Pattern {
                 components.addElement(component);
                 arrobaFound = false;
                 continue;
+            }
+            if (rangeFound){
+                if (c==']'){
+                    rangeFound=false;
+                }
+                if (c=='-'){
+                    while(c!=']'){
+
+                    }
+                }
+
             }
             if (c == '?') {
                 Component component = new Component();
@@ -32,6 +45,7 @@ public class Pattern {
             } else if (c == '[') {
                 Component component = new Component();
                 component.tipo = Component.TComponent.charClass;
+                rangeFound= true;
             } else if (c == '@') {
                 arrobaFound = true;
             } else {
