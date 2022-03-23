@@ -3,7 +3,6 @@ public class Pattern {
 
     Pattern(String strPatr) {
         boolean arrobaFound = false;
-        boolean rangeFound = false;
 
         for (int i = 0; i < strPatr.length(); i++) {
             char c = strPatr.charAt(i);
@@ -14,17 +13,6 @@ public class Pattern {
                 components.addElement(component);
                 arrobaFound = false;
                 continue;
-            }
-            if (rangeFound){
-                if (c==']'){
-                    rangeFound=false;
-                }
-                if (c=='-'){
-                    while(c!=']'){
-
-                    }
-                }
-
             }
             if (c == '?') {
                 Component component = new Component();
@@ -45,7 +33,17 @@ public class Pattern {
             } else if (c == '[') {
                 Component component = new Component();
                 component.tipo = Component.TComponent.charClass;
-                rangeFound= true;
+                String caracteres = "";
+                for (int j = i; c != ']'; j++) {
+                    c = strPatr.charAt(j);
+                    caracteres+=c;
+                    i=j;
+                }
+                caracteres = cleanString(caracteres);
+                System.out.println(caracteres);
+                component.rango = caracteres.toCharArray();
+                components.addElement(component);
+
             } else if (c == '@') {
                 arrobaFound = true;
             } else {
@@ -56,5 +54,28 @@ public class Pattern {
             }
         }
 
+    }
+
+    private String cleanString(String caracteres) {
+        String range = "";
+
+        for (int i = 0; i < caracteres.length(); i++) {
+            char c = caracteres.charAt(i);
+            if (c == '[' || c == ']'){
+                continue;
+            }
+            if (i != caracteres.length()-1) {
+                char asciiValor1 = caracteres.charAt(i);
+                if (caracteres.charAt(i + 1) == '-') {
+                    char asciiValor2 = caracteres.charAt(i+2);
+                    for (int j = 0; j < (asciiValor2-asciiValor1); j++) {
+                        range+=c++;
+                    }
+                    continue;
+                }
+                range+=c;
+            }
+        }
+        return range;
     }
 }

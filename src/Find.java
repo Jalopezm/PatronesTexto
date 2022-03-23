@@ -46,6 +46,14 @@ public class Find {
             case boL, eoL -> {
                return c == component.character;
             }
+            case charClass -> {
+                for (int i = 0; i < component.rango.length; i++) {
+                    if (c == component.rango[i]){
+                        return true;
+                    }
+                }
+                return false;
+            }
             //            case closure -> {}
         }
         return false;
