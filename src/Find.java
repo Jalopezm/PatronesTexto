@@ -1,10 +1,8 @@
-import java.util.Optional;
-
 public class Find {
-    private String texto;
+    private String text;
 
     public Find(String texto) {
-        this.texto = texto;
+        this.text = texto;
     }
 
     public boolean match(String stringPat) {
@@ -12,23 +10,23 @@ public class Find {
         if (stringPat.length() == 0) {
             return false;
         }
-        int contador = 0;
-        for (int i = 0; i < this.texto.length(); i++) {
-            char c = this.texto.charAt(i);
-            if (matchText(pattern.components.get(contador), c)) {
-                contador++;
+        int accountant = 0;
+        for (int i = 0; i < this.text.length(); i++) {
+            char c = this.text.charAt(i);
+            if (matchText(pattern.components.get(accountant), c)) {
+                accountant++;
             }else{
-                if (stringPat.charAt(0) == '%' && !matchText(pattern.components.get(contador), c)){
+                if (stringPat.charAt(0) == '%' && !matchText(pattern.components.get(accountant), c)){
                     return false;
                 }
-                if (stringPat.charAt(stringPat.length()-1) == '$' && contador == pattern.components.size()-1){
+                if (stringPat.charAt(stringPat.length()-1) == '$' && accountant == pattern.components.size()-1){
                     return true;
                 }
-                i -= contador;
-                contador = 0;
+                i -= accountant;
+                accountant = 0;
             }
-            if (contador == pattern.components.size()) {
-                if(stringPat.charAt(stringPat.length()-1) == '$' && i != this.texto.length()-1){
+            if (accountant == pattern.components.size()) {
+                if(stringPat.charAt(stringPat.length()-1) == '$' && i != this.text.length()-1){
                    return false;
                 }
                 return true;
@@ -38,7 +36,7 @@ public class Find {
     }
 
     private boolean matchText(Component component, char c) {
-        switch (component.tipo) {
+        switch (component.type) {
             case nChar -> {
                 return component.character == c;
             }
@@ -49,8 +47,8 @@ public class Find {
                return c == component.character;
             }
             case charClass -> {
-                for (int i = 0; i < component.rango.length; i++) {
-                    if (c == component.rango[i]){
+                for (int i = 0; i < component.range.length; i++) {
+                    if (c == component.range[i]){
                         return true;
                     }
                 }

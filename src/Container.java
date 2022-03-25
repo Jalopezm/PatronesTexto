@@ -1,3 +1,5 @@
+//Esta clase con nombre container servira para guardar los componentes en un array
+//que se ira autoincrementado cuando reciba un nuevo componente y no pueda entrar en el array
 public class Container<T> {
     private Object[] objectArray;
     private int capacity;
