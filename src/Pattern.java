@@ -1,12 +1,17 @@
-//La clase pattern sera la clase que nos permitira saber de que tipo son cada caracter
+//La clase pattern será la clase que nos permitirá saber de qué tipo son cada caràcter
+
 public class Pattern {
+
     //Inicializamos un contenedor
+
     Container<Component> components = new Container<>();
 
     Pattern(String strPatr) {
         boolean arrobaFound = false;
-        //Entramos en un bucle que mirara caracter a caracter el Patron introducido
-        //y le asignara un tipo e introducira dentro del array de componentes
+
+        //Entramos en un bucle que mirara caràcter a caràcter el Patron introducido
+        //y le asignara un tipo e introducirá dentro del array de componentes
+
         for (int i = 0; i < strPatr.length(); i++) {
             char c = strPatr.charAt(i);
             if (arrobaFound) {
@@ -37,11 +42,18 @@ public class Pattern {
                 Component component = new Component();
                 component.type = Component.TComponent.charClass;
                 String characters = "";
+
+                //Bucle para meter los caracteres del patron desde el primer corchete
+                //hasta que encuentre el corchete de cierre
+
                 for (int j = i; c != ']'; j++) {
                     c = strPatr.charAt(j);
-                    characters+=c;
-                    i=j;
+                    characters += c;
+                    i = j;
                 }
+
+                //Entramos en la funcion cleanString
+
                 characters = cleanString(characters);
                 component.range = characters.toCharArray();
                 components.addElement(component);
@@ -57,27 +69,29 @@ public class Pattern {
         }
 
     }
+
     //La funcion cleanString servira para quitar los corchetes
     //y añadir en un string todas las letras que esten en el rango
     //pej : [a-g] -> abcdefg
+
     private String cleanString(String characters) {
         String range = "";
 
         for (int i = 0; i < characters.length(); i++) {
             char c = characters.charAt(i);
-            if (c == '[' || c == ']'){
+            if (c == '[' || c == ']') {
                 continue;
             }
-            if (i != characters.length()-1) {
+            if (i != characters.length() - 1) {
                 char asciiValor1 = characters.charAt(i);
                 if (characters.charAt(i + 1) == '-') {
-                    char asciiValor2 = characters.charAt(i+2);
-                    for (int j = 0; j < (asciiValor2-asciiValor1); j++) {
-                        range+=c++;
+                    char asciiValor2 = characters.charAt(i + 2);
+                    for (int j = 0; j < (asciiValor2 - asciiValor1); j++) {
+                        range += c++;
                     }
                     continue;
                 }
-                range+=c;
+                range += c;
             }
         }
         return range;
